@@ -1,6 +1,5 @@
 let K = Int(readLine()!)!
 var arr: [Int] = []
-var answer = 0
 
 for i in 0..<K {
     let num = Int(readLine()!)!
@@ -11,8 +10,6 @@ for i in 0..<K {
     }
 }
 
-arr.forEach {
-    answer += $0
-}
+let answer = arr.reduce(0, +)
 
 print(answer)
