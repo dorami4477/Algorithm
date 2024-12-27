@@ -1,31 +1,25 @@
-    let V = Int(readLine()!)!
-    let E = Int(readLine()!)!
-    var graph = [[Int]](repeating: [], count: V + 1)
-    var visited = [Bool](repeating: false, count: V + 1)
+    let n = Int(readLine()!)!
+    let m = Int(readLine()!)!
+    var graph = [[Int]](repeating: [], count: n + 1)
+    var visited = [Bool](repeating: false, count: n + 1)
     
-    
-    for _ in 0..<E {
-        let vs = readLine()!.split(separator: " ").map{ Int($0)! }
-        graph[vs[0]].append(vs[1])
-        graph[vs[1]].append(vs[0])
+    for _ in 0..<m {
+        let m = readLine()!.split(separator: " ").map{ Int($0)! }
+        graph[m[0]].append(m[1])
+        graph[m[1]].append(m[0])
     }
     
-    func dfs(_ node: Int) {
-        visited[node] = true
-        for next in graph[node] {
-            if !visited[next] {
-                dfs(next)
+    var visit = [Int]()
+    func dfs(_ n: Int) {
+        visited[n] = true
+        
+        for nextNode in graph[n] {
+            if !visited[nextNode] {
+                visit.append(n)
+                dfs(nextNode)
             }
         }
     }
     
     dfs(1)
-    var answer = 0
-    
-    visited.forEach {
-        if $0 == true {
-            answer += 1
-        }
-    }
-    
-    print(answer - 1)
+    print(visit.count)
