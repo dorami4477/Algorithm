@@ -12,7 +12,7 @@
 
         var count = 0
         
-        func bfs(_ n: Int) {
+        func dfs(_ n: Int) {
             visited[n] = true
             
             for i in graph[n] {
@@ -22,6 +22,7 @@
                 }
             }
         }
-        bfs(1)
+        
+        dfs(1)
         print(count)
     }
