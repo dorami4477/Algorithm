@@ -1,45 +1,40 @@
-   let nc = readLine()!.split(separator: " ").map{ Int($0)! }
-    let n = nc[0], c = nc[1]
-    var house = [Int]()
-    
+    let input = readLine()!.split(separator: " ").map{ Int($0)! }
+    let n = input[0], c = input[1]
+    var coord = [Int]()
     for _ in 0..<n {
-        let num = Int(readLine()!)!
-        house.append(num)
+        coord.append(Int(readLine()!)!)
     }
     
-    house.sort()
+    coord.sort()
     
-    var minValue = 1
-    var maxValue = house[house.count - 1] - house[0]
-    var answer = 0
+    var minV = 0
+    var maxV = coord[n - 1] - coord[0]
+    var maxDistance = 0
     
-    while minValue <= maxValue {
-        let mid = (minValue + maxValue) / 2
-        var queue = [Int]()
-        var idx = 0
-        queue.append(house[0])
+    while minV <= maxV {
+        let mid = (minV + maxV) / 2
+        var wifi = [coord[0]]
+        var index = 0
         
-        for i in 1..<house.count {
-            if queue.count <= idx {
-                break
-            }
-            if house[i] - queue[idx] >= mid {
-                queue.append(house[i])
-                idx += 1
+        for i in 1..<n {
+            if coord[i] - wifi[index] >= mid {
+                wifi.append(coord[i])
+                index += 1
             }
         }
         
-        if queue.count < c {
-            maxValue = mid - 1
+        if wifi.count < c {
+            maxV = mid - 1
         } else {
-            minValue = mid + 1
-            
+            minV = mid + 1
             var distance = 1000000000
-            for i in 1..<queue.count {
-                distance = min(distance, queue[i] - queue[i - 1])
+            for i in 1..<wifi.count {
+                let newDistance = wifi[i] - wifi[i - 1]
+                distance = min(distance, newDistance)
             }
-            answer = max(answer, distance)
+            
+            maxDistance = max(maxDistance, distance)
         }
     }
     
-    print(answer)
+    print(maxDistance)
