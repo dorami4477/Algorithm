@@ -1,33 +1,28 @@
     let input = readLine()!.split(separator: " ").map{ Int($0)! }
     let n = input[0], m = input[1]
     var graph = [[Int]](repeating: [], count: n + 1)
-    
     for i in 1...n {
         for j in 1...n {
-            if j == i { continue }
+            if i == j { continue }
             graph[i].append(j)
         }
     }
- 
-    for i in 1...n {
-        dfs(i, count: 0, group: [i])
-    }
     
-    func dfs(_ n: Int, count: Int, group: [Int]) {
-        var depth = count
-        depth += 1
+    func dfs(num: Int, group: [Int]) {
         var group = group
-        
-        if depth == m {
-            let answer = group.map{ String($0) }.joined(separator: " ")
-            print(answer)
+        if group.count == m {
+            print(group.map{ String($0) }.joined(separator: " "))
         }
-
-        for i in graph[n] {
+        
+        for i in graph[num] {
             if !group.contains(i) {
                 group.append(i)
-                dfs(i, count: depth, group: group)
+                dfs(num: i, group: group)
                 group.removeLast()
             }
         }
+    }
+
+    for i in 1...n {
+        dfs(num: i, group: [i])
     }
