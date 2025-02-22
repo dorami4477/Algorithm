@@ -1,32 +1,38 @@
-    let name = readLine()!
-    var dict = [Character: Int]()
-    
-    for i in name {
-        if dict.keys.contains(i) {
-            dict[i]! += 1
+    let letter = readLine()!
+    var dict: [String: Int] = [:]
+    for i in letter {
+        if dict[String(i)] != nil {
+            dict[String(i)]! += 1
         } else {
-            dict[i] = 1
+            dict[String(i)] = 1
         }
     }
     
-    func findAnswer() -> String {
-        var section = ""
-        var center = ""
-        var oddNumberCount = 0
+    var word1 = ""
+    var word2 = ""
+    var mid = ""
+    var oddNnm = 0
+    
+    for i in dict.keys.sorted() {
+        if dict[i]! % 2 == 1 {
+            oddNnm += 1
+            mid = i
+            dict[i]! -= 1
+        }
         
-        for (key, value) in dict.sorted(by: { $0.key < $1.key }) {
-            if value % 2 == 1 {
-                center += String(key)
-                oddNumberCount += 1
-                if oddNumberCount > 1 {
-                    return "I'm Sorry Hansoo"
-                }
-            }
-            section += String(repeating: String(key), count: value / 2)
-            
+        if oddNnm > 1 {
+            break
         }
-        let reversedSection = section.reversed()
-        return (section + center + String(reversedSection))
+        
+        while dict[i]! % 2 == 0 && dict[i]! != 0 {
+                word1 += i
+                word2 += i
+            dict[i]! -= 2
+        }
     }
     
-    print(findAnswer())
+    if oddNnm > 1 {
+        print("I'm Sorry Hansoo")
+    } else {
+        print("\(word1)\(mid)\(String(word2.reversed()))")
+    }
